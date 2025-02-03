@@ -11,10 +11,7 @@ namespace fnPostDataStorage
     {
         private readonly ILogger<Function1> _logger;
 
-        public Function1(ILogger<Function1> logger)
-        {
-            _logger = logger;
-        }
+        public Function1(ILogger<Function1> logger) => _logger = logger;
 
         [Function("dataStorage")]
         public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req)
@@ -24,7 +21,7 @@ namespace fnPostDataStorage
 
             if (!req.Headers.TryGetValue("file-type", out var fileTypeReader))
             {
-                return new BadRequestObjectResult("O cabeçalho 'file-type' é obrigatório");
+                return new BadRequestObjectResult("O cabeï¿½alho 'file-type' ï¿½ obrigatï¿½rio");
             }
 
             var fileType = fileTypeReader.ToString();
@@ -33,10 +30,10 @@ namespace fnPostDataStorage
 
             if (file == null || file.Length == 0)
             {
-                return new BadRequestObjectResult("O arquivo não foi enviado");
+                return new BadRequestObjectResult("O arquivo nï¿½o foi enviado");
             }
 
-            string connectionString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
+            string? connectionString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
             string containerName = fileType;
             BlobClient blobClient = new BlobClient(connectionString, containerName, file.FileName);
             BlobContainerClient containerClient = new BlobContainerClient(connectionString, containerName);

@@ -6,18 +6,13 @@ using Newtonsoft.Json;
 
 namespace fnPostDatabase
 {
-    public class Function1
+    public class Function1(ILogger<Function1> logger)
     {
-        private readonly ILogger<Function1> _logger;
-
-        public Function1(ILogger<Function1> logger)
-        {
-            _logger = logger;
-        }
+        private readonly ILogger<Function1> _logger = logger;
 
         [Function("movie")]
         [CosmosDBOutput("%DatabaseName%", "movies", Connection = "CosmoDBConnection", CreateIfNotExists = true,PartitionKey ="title")]
-        public async Task<object?> Run([HttpTrigger(AuthorizationLevel.Function,"post")] HttpRequest req)
+        public static async Task<object?> Run([HttpTrigger(AuthorizationLevel.Function,"post")] HttpRequest req)
         {
 
             MovieRequest? movie = null;

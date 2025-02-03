@@ -6,16 +6,10 @@ using Microsoft.Extensions.Logging;
 
 namespace fnGetMovieDetail
 {
-    public class Function1
+    public class Function1(ILogger<Function1> logger, CosmosClient cosmosClient)
     {
-        private readonly ILogger<Function1> _logger;
-        private readonly CosmosClient _cosmosClient;
-
-        public Function1(ILogger<Function1> logger, CosmosClient cosmosClient)
-        {
-            _logger = logger;
-            _cosmosClient = cosmosClient;
-        }
+        private readonly ILogger<Function1> _logger = logger;
+        private readonly CosmosClient _cosmosClient = cosmosClient;
 
         [Function("detail")]
         public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequestData req)
